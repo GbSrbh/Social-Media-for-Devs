@@ -1,3 +1,21 @@
 # Social-Media-for-Devs
 
-yyeah yeah
+Folder "1" stands for backend.
+
+Go to "1/config" and create a new file named "default.json".
+
+Inside this file add this tempelate:
+{
+  "mongoURI": "",
+  "jsonSecret": "",
+  "githubClientId": "",
+  "githubClientSecret": ""
+}
+
+In here, add your mongo connection uri, any random json secret, andd your github clientId and secret. Github clinet id and secret can be optional but for proper functioning you will need to add it.
+
+After adding this, open the project in vscode, create a terminal and run the following commands:
+"cd 1"
+"npm run startLive"
+
+This is for backend.
