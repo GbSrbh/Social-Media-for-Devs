@@ -12,10 +12,10 @@ Inside this file add this tempelate:
   "githubClientSecret": ""
 }
 
-In here, add your mongo connection uri, any random json secret, andd your github clientId and secret. Github clinet id and secret can be optional but for proper functioning you will need to add it.
+In here, add your mongodb connection uri, any random json secret, your github clientId and secret. Github clinet id and secret can be optional but for proper functioning you will need to add it.
 
-After adding this, open the project in vscode, create a terminal and run the following commands:
+After adding this, open the project in vscode, create a new terminal and run the following commands:
 "cd 1"
 "npm run startLive"
 
-This is for backend.
+This was it for backend.
