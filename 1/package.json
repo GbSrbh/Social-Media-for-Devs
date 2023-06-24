@@ -5,7 +5,9 @@
   "main": "server.js",
   "scripts": {
     "start": "node server.js",
-    "startLive": "nodemon server.js"
+    "startLive": "nodemon server.js",
+    "client": "npm start --prefix client",
+    "dev": "concurrently \"npm run startLive\" \"npm run client \""
   },
   "author": "Saurabh",
   "license": "MIT",
