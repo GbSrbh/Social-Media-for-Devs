@@ -1,9 +1,10 @@
 import './App.css';
 import Navbar from './components/layout/Navbar';
 import Landing from './components/layout/Landing';
-import { Route, Routes } from 'react-router-dom';
 import Register from "./components/auth/Register";
 import Login from "./components/auth/Login";
+
+import { Route, Routes } from 'react-router-dom';
 function App() {
   return (
     <div>
