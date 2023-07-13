@@ -16,6 +16,7 @@ In here, add your mongodb connection uri, any random json secret, your github cl
 
 After adding this, open the project in vscode, create a new terminal and run the following commands:
 "cd 1"
+"npm i" //Install all the dependencies
 "npm run dev"
 
 This will simultaneously launch backend and frontend (client).
