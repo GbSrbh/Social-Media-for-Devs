@@ -1,7 +1,9 @@
 //Register a user
 import {
   REGISTER_SUCCESS,
-  REGISTER_FAIL
+  REGISTER_FAIL,
+  USER_LOADED,
+  AUTH_ERROR
 } from '../actions/types';
 
 const initialState = {
@@ -14,7 +16,14 @@ const initialState = {
 export default function auth(state = initialState, action) {
   
   switch(action.type) {
-    case REGISTER_SUCCESS:
+    case USER_LOADED:
+      return {
+        ...state,
+        isAuthenticated: true,
+        loading: false,
+        user: action.payload
+      }
+    case REGISTER_SUCCESS://On successfull registeration.
       localStorage.setItem('token', action.payload.token);
       return {
         ...state,
@@ -22,7 +31,8 @@ export default function auth(state = initialState, action) {
         isAuthenticated: true,
         loading: false
       }
-    case REGISTER_FAIL:
+    case REGISTER_FAIL://On failure in registeration.
+    case AUTH_ERROR://Same for auth error and registerfail
       localStorage.removeItem('token');
       return {
         ...state,
@@ -33,5 +43,5 @@ export default function auth(state = initialState, action) {
     default:
       return state;
   }
-  
+
 }

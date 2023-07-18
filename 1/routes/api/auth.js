@@ -49,9 +49,9 @@ router.post('/',
 
   })
 
-router.get('/', authorisation, async (req, res) => {//This route is just to test our authorisation route with token.
+router.get('/', authorisation, async (req, res) => {
   try {
-    const user = await User.findById(req.user);
+    const user = await User.findById(req.user).select("-password");//If correct token is present in the headers, we will respond with that user 
     res.json(user);
 
   } catch (err) {

@@ -25,7 +25,7 @@ function Register(props) {
       console.log("Different Password");
       props.setAlert('Passwords do not match', 'danger');
     } else {
-      props.register({name, email, password});
+      props.register({ name, email, password });
     }
   }
 
