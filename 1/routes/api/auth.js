@@ -51,9 +51,8 @@ router.post('/',
 
 router.get('/', authorisation, async (req, res) => {
   try {
-    const user = await User.findById(req.user).select("-password");//If correct token is present in the headers, we will respond with that user 
-    res.json(user);
-
+    const user = await User.findById(req.user).select("-password");//Get user id from headers(req.user) 
+    res.json(user);//If correct token is present in the headers, we will respond with that user
   } catch (err) {
     return res.status(500).json({ error: { msg: "Server Error" } });
   }
