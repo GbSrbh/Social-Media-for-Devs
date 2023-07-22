@@ -3,6 +3,7 @@ import {
   REGISTER_FAIL,
   USER_LOADED,
   AUTH_ERROR,
+  LOGIN_SUCCESS,
   LOGIN_FAIL
 } from './types';
 
@@ -62,7 +63,7 @@ export const register = (props) => async dispatch => {  //Props are name, email,
 }
 
 //Send post api request to '/api/auth' for login user and then to reducer for successfull or failed Login
-export const login = (props) => dispatch => {//Props would have email and password
+export const login = (props) => async dispatch => {//Props would have email and password
 
   const config = {
     headers: {
@@ -76,16 +77,16 @@ export const login = (props) => dispatch => {//Props would have email and passwo
   }
 
   try {
-    const res = axios.post('api/auth', body, config);//Login route
+    const res = await axios.post('api/auth', body, config);//Login route
     dispatch({
       type: LOGIN_SUCCESS,
-      payload: res.data
+      payload: res.data//Response would be token
     })
 
   } catch (err) {
-    const errors = res.response.data.errors;
+    const errors = err.response.data.errors;
     if (errors) {
-      errors.forEach((error) => dispatch(setAlert(error.msg)));
+      errors.forEach((error) => dispatch(setAlert(error.msg, 'danger')));
     }
     dispatch({
       type: LOGIN_FAIL

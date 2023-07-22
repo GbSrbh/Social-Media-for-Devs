@@ -24,14 +24,14 @@ router.post('/',
       //If user exists in our database
       const user = await User.findOne({ email: email });
       if (!user) {
-        return res.status(400).json({ errors: { msg: "Invalid Credentials!" } });
+        return res.status(400).json({ errors: [{ msg: "Invalid Credentials!" }] });
       }
 
       //Match the password entered with the hashed user's password we found
       const isMatch = await bcrypt.compare(password, user.password);
 
       if (!isMatch) {
-        return res.status(400).json({ erros: { msg: "Invaid Credentials!" } });
+        return res.status(400).json({ errors: [{ msg: "Invaid Credentials!" }] });
       }
 
       const payload = {

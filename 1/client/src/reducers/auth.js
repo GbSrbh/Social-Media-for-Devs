@@ -16,8 +16,8 @@ const initialState = {
 }
 
 export default function auth(state = initialState, action) {
-  
-  switch(action.type) {
+
+  switch (action.type) {
     case USER_LOADED:
       return {
         ...state,
@@ -41,7 +41,7 @@ export default function auth(state = initialState, action) {
       return {
         ...state,
         token: null,
-        isAuthenticated:false,
+        isAuthenticated: false,
         loading: false
       }
     default:

@@ -8,8 +8,12 @@ import Login from "./components/auth/Login";
 import { Provider } from 'react-redux';
 import store from './store';
 import Alert from './components/layout/Alert';
-import {loadUser} from './actions/auth';
+import { loadUser } from './actions/auth';
+import setAuthToken from './utils/setAuthToken';
 
+if (localStorage.token) {
+  setAuthToken(localStorage.token);//Add token in the headers
+}
 function App() {
   useEffect(() => {//This will run only once everytime app.js is updated
     store.dispatch(loadUser());

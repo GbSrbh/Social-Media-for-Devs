@@ -10,6 +10,7 @@ const User = require('./../../models/User');//Mongoose User Model
 const jwt = require('jsonwebtoken');
 const config = require('config');
 
+//Register a user
 router.post('/',
   [
     check('name', 'Name field is required so, please enter a name.').not().isEmpty(),
