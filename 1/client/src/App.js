@@ -1,9 +1,9 @@
-import { Route, Routes } from 'react-router-dom';
+import { BrowserRouter, Route, Routes } from 'react-router-dom';
 import { useEffect } from 'react';
 import './App.css';
 import Register from "./components/auth/Register";
 import Login from "./components/auth/Login";
-
+import Delete from './components/Delete';
 //Redux
 import { Provider } from 'react-redux';
 import store from './store';
@@ -14,11 +14,12 @@ import setAuthToken from './utils/setAuthToken';
 if (localStorage.token) {
   setAuthToken(localStorage.token);//Add token in the headers
 }
+
 function App() {
+
   useEffect(() => {//This will run only once everytime app.js is updated
     store.dispatch(loadUser());
   }, []);
-
   return (
     //Wrap everyhting inside provider (they all will have access to all states)
     <Provider store={store}>
@@ -27,6 +28,7 @@ function App() {
         <Routes>
           <Route exact path="/register" element={<Register />} />
           <Route exact path="/login" element={<Login />} />
+          <Route exact path="/dashboard" element={<Delete />} />
         </Routes>
       </section>
     </Provider>
@@ -34,3 +36,5 @@ function App() {
 }
 
 export default App;
+
+

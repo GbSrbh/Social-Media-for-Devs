@@ -10,6 +10,9 @@ const Login = (props) => {//props -> function login(email, password) and isAuthe
     email: "",
     password: ""
   });
+  if (props.isAuthenticated) {
+    return <Navigate to={'/dashboard'} />
+  }
   const { email, password } = formData;
 
   function formChange(e) {
@@ -20,10 +23,6 @@ const Login = (props) => {//props -> function login(email, password) and isAuthe
     props.login({ email, password });
   }
 
-  if (props.isAuthenticated) {
-    console.log("hello");
-    return <Navigate to="/dashboard" />
-  }
   return (
     <section >
       <h1 className="large text-primary">Sign In</h1>

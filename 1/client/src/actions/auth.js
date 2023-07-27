@@ -6,7 +6,6 @@ import {
   LOGIN_SUCCESS,
   LOGIN_FAIL
 } from './types';
-
 import { setAlert } from './alert';
 import axios from 'axios';
 import setAuthToken from '../utils/setAuthToken';
@@ -17,8 +16,7 @@ export const loadUser = () => async dispatch => {
     setAuthToken(localStorage.token);
   }
   try {
-    const res = await axios.get('/api/auth');//Successfully recieve user if token is there. Else catch error.
-
+    const res = await axios.get('/api/auth');//Successfully recieve user if token is there in the header. Else catch error.
     dispatch({
       type: USER_LOADED,
       payload: res.data
@@ -51,6 +49,7 @@ export const register = (props) => async dispatch => {  //Props are name, email,
       type: REGISTER_SUCCESS,
       payload: res.data//token received from backend
     })
+    dispatch(loadUser());
   } catch (err) {
     const errors = err.response.data.errors;//errors array received from backend (name required, valid email..)
     if (errors) {
@@ -78,11 +77,11 @@ export const login = (props) => async dispatch => {//Props would have email and 
 
   try {
     const res = await axios.post('api/auth', body, config);//Login route
-    dispatch({
+    dispatch({//Disoatch if no errors are sent in backend.
       type: LOGIN_SUCCESS,
       payload: res.data//Response would be token
     })
-
+    dispatch(loadUser());//Also load the user once the token is in the local storage.
   } catch (err) {
     const errors = err.response.data.errors;
     if (errors) {

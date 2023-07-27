@@ -1,4 +1,4 @@
-import { Link } from "react-router-dom";
+import { Link, Navigate } from "react-router-dom";
 import { useState } from "react";
 //For redux
 import PropTypes from 'prop-types';
@@ -29,6 +29,9 @@ function Register(props) {
     }
   }
 
+  if (props.isAuthenticated) {
+    return <Navigate to={'/dashboard'} />
+  }
   return (
     <section >
       <h1 className="large text-primary">Sign Up</h1>
@@ -73,9 +76,13 @@ function Register(props) {
   );
 }
 
+const mapStateToProps = state => ({
+  isAuthenticated: state.auth.isAuthenticated
+})
 Register.propTypes = {
   setAlert: PropTypes.func.isRequired,
-  register: PropTypes.func.isRequired
+  register: PropTypes.func.isRequired,
+  isAuthenticated: PropTypes.bool
 }
 
-export default connect(null, { setAlert, register })(Register);
+export default connect(mapStateToProps, { setAlert, register })(Register);
