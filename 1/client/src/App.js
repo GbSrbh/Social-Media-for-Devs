@@ -20,18 +20,16 @@ function App() {
   useEffect(() => {//This will run only once everytime app.js is updated
     store.dispatch(loadUser());
   }, []);
+  
   return (
-    //Wrap everyhting inside provider (they all will have access to all states)
-    <Provider store={store}>
-      <section className='container'>
-        <Alert />
-        <Routes>
-          <Route exact path="/register" element={<Register />} />
-          <Route exact path="/login" element={<Login />} />
-          <Route exact path="/dashboard" element={<Delete />} />
-        </Routes>
-      </section>
-    </Provider>
+    <section className='container'>
+      <Alert />
+      <Routes>
+        <Route exact path="/register" element={<Register />} />
+        <Route exact path="/login" element={<Login />} />
+        <Route exact path="/dashboard" element={<Delete />} />
+      </Routes>
+    </section>
   );
 }
 
