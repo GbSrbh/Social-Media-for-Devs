@@ -3,7 +3,8 @@ import { useEffect } from 'react';
 import './App.css';
 import Register from "./components/auth/Register";
 import Login from "./components/auth/Login";
-import Delete from './components/Delete';
+import Dashboard from './components/layout/dashboard/Dashboard';
+import PrivateRoute from './components/routing/PrivateRoute';
 //Redux
 import { Provider } from 'react-redux';
 import store from './store';
@@ -20,14 +21,14 @@ function App() {
   useEffect(() => {//This will run only once everytime app.js is updated
     store.dispatch(loadUser());
   }, []);
-  
+
   return (
     <section className='container'>
       <Alert />
       <Routes>
         <Route exact path="/register" element={<Register />} />
         <Route exact path="/login" element={<Login />} />
-        <Route exact path="/dashboard" element={<Delete />} />
+        <Route exact path="/dashboard" element={<PrivateRoute> <Dashboard /> </PrivateRoute>} />
       </Routes>
     </section>
   );
