@@ -7,7 +7,7 @@ const authorisation = require('../../middleware/authorisation');
 const User = require('../../models/User');
 const { check, validationResult } = require('express-validator');
 
-//Access(view) profile through this route after passing the token(this profile is not login sign up, it's like you can create youtube channel after logging in your youtube account)
+//Access(view) profile through this route after passing the token(this profile is not login, sign up, it's like you can create youtube channel after logging in your youtube account but you can still decide not to create youtube channel and use it anyway)
 router.get('/me', authorisation, async (req, res) => {
   try {
     const profile = await Profile.findOne({ user: req.user }).populate('user', ['name', 'avatar'], 'user');
