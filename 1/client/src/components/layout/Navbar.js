@@ -17,8 +17,14 @@ const Navbar = (props) => {//props: logout function and auth state
   const authLinks = (
     <ul>
       <li>
+        <Link to="/dashboard">
+          <i className="fas fa-user" />{'  '}
+          Dashboard
+        </Link>
+      </li>
+      <li>
         <a onClick={props.logout} href={"#!"}>
-          Logout
+          <i className="fas fa-sign-out-alt" />{' '}Logout
         </a>
       </li>
     </ul>
@@ -30,7 +36,7 @@ const Navbar = (props) => {//props: logout function and auth state
         <Link to={"/"}> <i className="fas fa-code" /> DevConnector </Link>
       </h1>
 
-      {(!props.auth.loading) && (props.auth.isAuthenticated ? authLinks : guestLinks)}
+      {(props.auth.isAuthenticated ? authLinks : guestLinks)}
 
     </nav>
   )
