@@ -1,6 +1,10 @@
 import { useState, Fragment } from 'react';
+import { connect } from 'react-redux';
+import PropTypes from 'prop-types';
+import { createProfile } from '../../actions/profile';
+import { useNavigate } from 'react-router-dom';
 
-export default function CreateProfile() {
+const CreateProfile = ({ createProfile, profile }) => {
   const [formData, setFormData] = useState({
     company: '',
     website: '',
@@ -32,8 +36,14 @@ export default function CreateProfile() {
   function onChange(e) {
     setFormData({ ...formData, [e.target.name]: e.target.value });
   }
+  const navigate = useNavigate();
   function onSubmit(e) {
     e.preventDefault();
+    const edit = profile.profile ? true : false;//if profile already exists then edit is set to ture.
+    createProfile(formData, edit).then(() => {
+      navigate('/dashboard');
+    });
+
   }
 
   return (
@@ -146,3 +156,11 @@ export default function CreateProfile() {
     </Fragment>
   )
 }
+
+CreateProfile.propTypes = {
+  createProfile: PropTypes.func.isRequired,
+}
+const mapStateToProps = state => ({
+  profile: state.profile,
+})
+export default connect(mapStateToProps, { createProfile })(CreateProfile);
