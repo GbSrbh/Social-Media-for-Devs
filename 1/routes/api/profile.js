@@ -54,7 +54,8 @@ router.post('/',
     if (location) { profileDetails.location = location; }
     if (status) { profileDetails.status = status; }
     if (skills) {
-      profileDetails.skills = skills.split(',');//Convert entered skills in string form to array form.
+      profileDetails.skills = Array.isArray(skills) ? skills : skills.split(',').map((skill) => ' ' + skill.trim());
+      // profileDetails.skills = skills.split(',');//Convert entered skills in string form to array form.
     }
     if (bio) { profileDetails.bio = bio; }
     if (githubusername) { profileDetails.githubusername = githubusername; }
@@ -75,7 +76,7 @@ router.post('/',
         //update
         profile = await Profile.findOneAndUpdate({ user: req.user }, { $set: profileDetails }, { new: true });//Find the profile whoose user filed is equal to req.user. And set that profile to "profileDetails", we created.
         await profile.save();
-        res.json(profile);
+        return res.json(profile);
       }
       //If profile does not exist, Create new one.
       profile = new Profile(profileDetails);
@@ -90,7 +91,7 @@ router.get('/', async (req, res) => {
   try {
     const profiles = await Profile.find().populate('user', ['name', 'avatar'], 'user');
     if (profiles.isEmpty) {
-      res.json({ 'msg': "No Profiles Available!" });
+      return res.json({ 'msg': "No Profiles Available!" });
     }
     res.json(profiles);
   } catch (err) {
@@ -104,7 +105,7 @@ router.get('/user/:user_id', async (req, res) => {
   try {
     const profile = await Profile.findOne({ user: req.params.user_id }).populate('user', ['name', 'avatar'], 'user');
     if (!profile) {
-      res.status(400).json({ 'msg': 'No Profile Found!' });
+      return res.status(400).json({ 'msg': 'No Profile Found!' });
     }
     res.json(profile);
   } catch (err) {
@@ -160,7 +161,7 @@ router.put('/experience',
       try {
         let profile = await Profile.findOne({ user: req.user });
         if (!profile) {
-          res.status(400).json({ msg: "No Profle Found!" });
+          return res.status(400).json({ msg: "No Profle Found!" });
         }
         profile.experience.unshift(profileExperience);//Because one profile can have more than one experience (its array)
         await profile.save();
@@ -187,8 +188,8 @@ router.delete('/experience/:exp_id', authorisation, async (req, res) => {
 
 //Route to add education field to profile
 router.put('/education', [authorisation, [
-  check('school', "School field is required!!").not().isEmpty(),
-  check('degree', "Degree field is required!!").not().isEmpty(),
+  check('school', "School is required!!").not().isEmpty(),
+  check('degree', "Degree is required!!").not().isEmpty(),
   check('fieldofstudy', "Field of study is required!!").not().isEmpty(),
   check('from', "From date is required!!").not().isEmpty()
 ], async (req, res) => {
@@ -209,7 +210,7 @@ router.put('/education', [authorisation, [
   try {
     const profile = await Profile.findOne({ user: req.user });
     if (!profile) {
-      res.status(400).json({ msg: "No Profile Found!!" });
+      return res.status(400).json({ msg: "No Profile Found!!" });
     }
     profile.education.unshift(education);
     await profile.save();
