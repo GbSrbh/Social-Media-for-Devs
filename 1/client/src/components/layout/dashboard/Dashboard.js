@@ -4,6 +4,8 @@ import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
 import { getProfile } from '../../../actions/profile';
 import Spinner from '../../../utils/spinner';
+import Experience from '../../profile-forms/Experience';
+import Education from '../../profile-forms/Education';
 
 const Dashboard = ({ getProfile, profile, auth }) => {
   useEffect(() => {
@@ -30,6 +32,8 @@ const Dashboard = ({ getProfile, profile, auth }) => {
             <Link to="/add-education" className="btn btn-light"
             ><i className="fas fa-graduation-cap text-primary"></i> Add Education</Link>
           </div>
+          <Experience experience={profile.profile.experience} />
+          <Education education={profile.profile.education} />
         </Fragment>
       ) : (
         <Fragment>

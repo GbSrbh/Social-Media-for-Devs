@@ -33,7 +33,6 @@ const AddEducation = ({ addEducation, profile }) => {
   const navigate = useNavigate();
   function onSubmit(e) {
     e.preventDefault();
-    console.log(formData)
     addEducation(formData);
     navigate('/dashboard');
   }
