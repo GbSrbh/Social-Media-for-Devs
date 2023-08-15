@@ -2,10 +2,12 @@ const express = require('express');
 const router = express.Router();
 const config = require('config');
 const request = require('request');
-const Profile = require('../../models/Profile');
 const authorisation = require('../../middleware/authorisation');
-const User = require('../../models/User');
 const { check, validationResult } = require('express-validator');
+
+const Profile = require('../../models/Profile');
+const User = require('../../models/User');
+const Post = require('../../models/Post');
 
 //Access(view) profile through this route after passing the token(this profile is not login, sign up, it's like you can create youtube channel after logging in your youtube account but you can still decide not to create youtube channel and use it anyway)
 router.get('/me', authorisation, async (req, res) => {
@@ -121,11 +123,16 @@ router.get('/user/:user_id', async (req, res) => {
 //Route to delete the User, his profile, and his posts from our database
 router.delete('/', authorisation, async (req, res) => {
   try {
-    //Delete User
-    await User.findOneAndRemove({ id: req.user });
-    //Delete User Profile
-    await Profile.findOneAndRemove({ user: req.user });
     //Delete User Posts: Yet to be done
+    //Delete User Profile
+    //Delete User
+    await Promise.all([
+      Post.deleteMany({ user: req.user }),
+      Profile.findOneAndRemove({ user: req.user }),
+      User.findOneAndRemove({ _id: req.user })
+    ]);
+    // await Profile.findOneAndRemove({ user: req.user });
+    // await User.findOneAndRemove({ id: req.user });
 
     res.json({ msg: 'User Deleted!' });
   } catch (err) {
@@ -176,10 +183,14 @@ router.put('/experience',
 router.delete('/experience/:exp_id', authorisation, async (req, res) => {
   try {
     const profile = await Profile.findOne({ user: req.user });
-    const toBeRemovedIndex = profile.experience.map(function (item) { return (item.id) }).indexOf(req.params.exp_id);
-    profile.experience.splice(toBeRemovedIndex, 1);//Remove the value at this index from experience array.
+
+    const toBeRemovedIndex = profile.experience.findIndex(item => item.id === req.params.exp_id);
+    if (toBeRemovedIndex !== -1) {
+      profile.experience.splice(toBeRemovedIndex, 1);
+    }
     await profile.save();
-    res.json(profile);
+    return res.json(profile);
+
   } catch (err) {
     console.error(err.message);
     return res.status(500).send('Server Error!!');
@@ -225,10 +236,14 @@ router.put('/education', [authorisation, [
 router.delete('/education/:ed_id', authorisation, async (req, res) => {
   try {
     const profile = await Profile.findOne({ user: req.user });
-    const toBeRemovedIndex = profile.education.map(function (item) { return (item.id) }).indexOf(req.params.ed_id);
-    profile.education.splice(toBeRemovedIndex, 1);
+
+    const toBeRemovedIndex = profile.education.findIndex(item => item.id === req.params.ed_id);
+    if (toBeRemovedIndex === -1) {
+      profile.education.splice(toBeRemovedIndex, 1);
+    }
+
     await profile.save();
-    res.json(profile);
+    return res.json(profile);
   } catch (err) {
     console.error(err.message);
     return res.status(500).json({ msg: "Server Error!!" });
