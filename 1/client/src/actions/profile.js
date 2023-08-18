@@ -4,7 +4,9 @@ import {
   PROFILE_ERROR,
   UPDATE_PROFILE,
   ACCOUNT_DELETED,
-  CLEAR_PROFILE
+  CLEAR_PROFILE,
+  GET_PROFILES,
+  SET_SKILLS
 } from './types';
 
 import axios from "axios";
@@ -183,5 +185,65 @@ export const deleteAccount = () => async dispatch => {
       })
     }
 
+  }
+}
+
+//Get all profiles
+export const getProfiles = () => async (dispatch) => {
+  dispatch({ type: CLEAR_PROFILE });
+  try {
+    const res = await axios.get('/api/profile');
+
+    dispatch({//This dispatch is causing the issue, if I remove this and then console log the res data, I cann see the skills there
+      type: GET_PROFILES,
+      payload: res.data
+    });
+  } catch (err) {
+    console.log(err);
+    dispatch({
+      type: PROFILE_ERROR,
+      payload: { msg: err.response.statusText, status: err.response.status }
+    })
+
+  }
+}
+
+//Set Skills by Getting all profiles
+export const setSkills = () => async (dispatch) => {
+
+  try {
+    const res = await axios.get('/api/profile');
+    const skillArray = [];
+    res.data.forEach((item) => skillArray.push(item.skills));
+    // await new Promise(resolve => setTimeout(resolve, 1000));
+
+    dispatch({
+      type: SET_SKILLS,
+      payload: skillArray
+    })
+
+  } catch (err) {
+    console.log(err);
+    dispatch({
+      type: PROFILE_ERROR,
+      payload: { msg: err.response.statusText, status: err.response.status }
+    })
+
+  }
+}
+
+//Get profile by user id
+export const getProfileById = id => async dispatch => {
+  try {
+    const res = await axios.get(`/api/profile/user/${id}`);
+    dispatch({
+      type: UPDATE_PROFILE,
+      payload: res.data
+    })
+  } catch (err) {
+    dispatch({
+      type: PROFILE_ERROR,
+      payload: { msg: err.response.statusText, status: err.response.status }
+    })
   }
 }

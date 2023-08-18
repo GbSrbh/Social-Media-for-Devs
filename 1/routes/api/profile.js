@@ -56,7 +56,11 @@ router.post('/',
     if (location) { profileDetails.location = location; }
     if (status) { profileDetails.status = status; }
     if (skills) {
-      profileDetails.skills = Array.isArray(skills) ? skills : skills.split(',').map((skill) => ' ' + skill.trim());
+      profileDetails.skills = Array.isArray(skills)
+        ? skills
+        : skills.split(',').map((skill) => ' ' + skill.trim());
+      // profileDetails.skills = skills.split(',').map(skill => skill.trim());
+      // profileDetails.skills = Array.isArray(skills) ? skills : skills.split(',').map((skill) => ' ' + skill.trim());
       // profileDetails.skills = skills.split(',');//Convert entered skills in string form to array form.
     }
     if (bio) { profileDetails.bio = bio; }
@@ -91,17 +95,15 @@ router.post('/',
 //Route to access all the profiles present in our database.
 router.get('/', async (req, res) => {
   try {
-    const profiles = await Profile.find().populate('user', ['name', 'avatar'], 'user');
-    if (profiles.isEmpty) {
-      return res.json({ 'msg': "No Profiles Available!" });
-    }
-    res.json(profiles);
+    const profiles = await Profile.find().populate('user', ['name', 'avatar']);
+
+    return res.json(profiles);
   } catch (err) {
     console.error(err.message);
-    res.status(500).send("Server Error");
+    res.status(500).send('Server Error');
   }
+});
 
-})
 //Route to access profile from user_id in url
 router.get('/user/:user_id', async (req, res) => {
   try {
@@ -238,7 +240,7 @@ router.delete('/education/:ed_id', authorisation, async (req, res) => {
     const profile = await Profile.findOne({ user: req.user });
 
     const toBeRemovedIndex = profile.education.findIndex(item => item.id === req.params.ed_id);
-    if (toBeRemovedIndex === -1) {
+    if (toBeRemovedIndex !== -1) {
       profile.education.splice(toBeRemovedIndex, 1);
     }
 

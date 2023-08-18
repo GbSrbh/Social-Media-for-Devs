@@ -2,8 +2,9 @@ import {
   GET_PROFILE,
   PROFILE_ERROR,
   CLEAR_PROFILE,
-  ADD_EDUCATION,
-  UPDATE_PROFILE
+  UPDATE_PROFILE,
+  GET_PROFILES,
+  SET_SKILLS
 } from '../actions/types';
 
 const initialState = {
@@ -11,7 +12,8 @@ const initialState = {
   profiles: [],
   repos: [],
   loading: true,
-  errors: {}
+  errors: {},
+  skillsArray: null
 }
 
 export default function profile(state = initialState, action) {
@@ -32,10 +34,22 @@ export default function profile(state = initialState, action) {
         profile: payload,
         loading: false
       }
+    case GET_PROFILES:
+      return {
+        ...state,
+        profiles: payload,
+        loading: false
+      }
     case PROFILE_ERROR:
       return {
         ...state,
         errors: payload,
+        loading: false
+      }
+    case SET_SKILLS:
+      return {
+        ...state,
+        skillsArray: payload,
         loading: false
       }
     default:

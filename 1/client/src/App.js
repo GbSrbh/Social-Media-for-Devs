@@ -9,6 +9,8 @@ import CreateProfile from './components/profile-forms/CreateProfile';
 import EditProfile from './components/profile-forms/EditProfile';
 import AddEducation from './components/profile-forms/AddEducation';
 import AddExperience from './components/profile-forms/AddExperience';
+import Profiles from './components/profiles/Profiles';
+import Profile from './components/Profile/Profile';
 //Redux
 import { Provider } from 'react-redux';
 import store from './store';
@@ -37,6 +39,8 @@ function App() {
         <Route exact path='/edit-profile' element={<PrivateRoute> <EditProfile /> </PrivateRoute>} />
         <Route exact path='/add-education' element={<PrivateRoute> <AddEducation /> </PrivateRoute>} />
         <Route exact path='/add-experience' element={<PrivateRoute> <AddExperience /> </PrivateRoute>} />
+        <Route exact path='/profiles' element={<Profiles />} />
+        <Route exact path='/profile/:id' element={<Profile />} />
       </Routes>
     </section>
   );
