@@ -6,7 +6,8 @@ import {
   ACCOUNT_DELETED,
   CLEAR_PROFILE,
   GET_PROFILES,
-  SET_SKILLS
+  SET_SKILLS,
+  GET_GITHUB_REPOS,
 } from './types';
 
 import axios from "axios";
@@ -238,6 +239,23 @@ export const getProfileById = id => async dispatch => {
     const res = await axios.get(`/api/profile/user/${id}`);
     dispatch({
       type: UPDATE_PROFILE,
+      payload: res.data
+    })
+  } catch (err) {
+    dispatch({
+      type: PROFILE_ERROR,
+      payload: { msg: err.response.statusText, status: err.response.status }
+    })
+  }
+}
+
+//Get Githubrepos by usernam
+export const getGithubRepos = username => async dispatch => {
+  try {
+    const res = await axios.get(`/api/profile/github/${username}`);
+
+    dispatch({
+      type: GET_GITHUB_REPOS,
       payload: res.data
     })
   } catch (err) {

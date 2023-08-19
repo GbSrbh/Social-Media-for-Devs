@@ -32,7 +32,7 @@ const Navbar = (props) => {//props: logout function and auth state
         </Link>
       </li>
       <li>
-        <a onClick={props.logout} href={"#!"}>
+        <a onClick={props.logout} href={"/login"}>
           <i className="fas fa-sign-out-alt" />{' '}Logout
         </a>
       </li>

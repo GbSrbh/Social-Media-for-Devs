@@ -4,7 +4,8 @@ import {
   CLEAR_PROFILE,
   UPDATE_PROFILE,
   GET_PROFILES,
-  SET_SKILLS
+  SET_SKILLS,
+  GET_GITHUB_REPOS
 } from '../actions/types';
 
 const initialState = {
@@ -51,6 +52,12 @@ export default function profile(state = initialState, action) {
         ...state,
         skillsArray: payload,
         loading: false
+      }
+    case GET_GITHUB_REPOS:
+      return {
+        ...state,
+        repos: payload,
+        loading: false,
       }
     default:
       return state;

@@ -22,3 +22,5 @@ export const ACCOUNT_DELETED = 'ACCOUNT_DELETED';
 
 export const GET_PROFILES = 'GET_PROFILES';
 export const SET_SKILLS = 'SET_SKILLS';
+
+export const GET_GITHUB_REPOS = 'GET_GITHUB_REPOS';
