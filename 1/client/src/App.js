@@ -1,4 +1,4 @@
-import { BrowserRouter, Route, Routes } from 'react-router-dom';
+import { Route, Routes } from 'react-router-dom';
 import { useEffect } from 'react';
 import './App.css';
 import Register from "./components/auth/Register";
@@ -11,8 +11,9 @@ import AddEducation from './components/profile-forms/AddEducation';
 import AddExperience from './components/profile-forms/AddExperience';
 import Profiles from './components/profiles/Profiles';
 import Profile from './components/Profile/Profile';
+import Posts from './components/post/Posts';
+
 //Redux
-import { Provider } from 'react-redux';
 import store from './store';
 import Alert from './components/layout/Alert';
 import { loadUser } from './actions/auth';
@@ -41,6 +42,7 @@ function App() {
         <Route exact path='/add-experience' element={<PrivateRoute> <AddExperience /> </PrivateRoute>} />
         <Route exact path='/profiles' element={<Profiles />} />
         <Route exact path='/profile/:id' element={<Profile />} />
+        <Route exact path='/posts' element={<PrivateRoute> <Posts /> </PrivateRoute>} />
       </Routes>
     </section>
   );

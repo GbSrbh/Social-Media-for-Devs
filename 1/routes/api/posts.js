@@ -34,7 +34,7 @@ router.post('/', [authorisation,
   }
 })
 
-//Route to fetch all posts (we don't allow user to see all public posts if he is not logged in thus token is needed)
+//Route to fetch all posts (we don't allow user to see all public posts if he is not logged in, thus token is needed)
 router.get('/', [authorisation], async (req, res) => {
   try {
     const posts = await Post.find().sort({ date: -1 });//Sort posts by getting latest post first
@@ -93,7 +93,7 @@ router.put('/like/:id', authorisation, async (req, res) => {
 
   try {
     const post = await Post.findById(req.params.id);
-    const userId = req.user;
+    const userId = req.user;//user id in headers
 
     const previousLike = post.likes.filter((item) => item.user.toString() === userId);
     if (previousLike.length > 0) {//If user has already liked the post

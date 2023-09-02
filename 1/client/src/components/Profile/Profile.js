@@ -27,10 +27,11 @@ const Profile = ({ getProfileById, profile, auth }) => {
           {auth.isAuthenticated && !auth.loading && auth.user._id === profile.profile.user._id && <Link to="/edit-profile " className='btn btn-dark'>Edit Profile</Link>}
 
           <div className="profile-grid my-1">
-            {/* <!-- Profile Top --> */}
+            
             <ProfileTop profile={profile.profile} />
-            {/* <!-- Profile About --> */}
+            
             <ProfileAbout profile={profile.profile} />
+            
             {/* <!-- Experience --> */}
             <div className="profile-exp bg-white p-2">
               <h2 className="text-primary">Experience</h2>
@@ -42,6 +43,7 @@ const Profile = ({ getProfileById, profile, auth }) => {
                 <h4>No experience credentials found.</h4>
               )}
             </div>
+            
             {/* <!-- Education --> */}
             <div className="profile-edu bg-white p-2">
               <h2 className="text-primary">Education</h2>

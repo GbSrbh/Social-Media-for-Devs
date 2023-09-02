@@ -21,6 +21,9 @@ const Navbar = (props) => {//props: logout function and auth state
   const authLinks = (
     <ul>
       <li>
+        <Link to="/posts">
+          Posts
+        </Link>
         <Link to="/profiles">
           Developers
         </Link>

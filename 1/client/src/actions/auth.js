@@ -51,7 +51,8 @@ export const register = (props) => async dispatch => {  //Props are name, email,
       type: REGISTER_SUCCESS,
       payload: res.data//token received from backend
     })
-    dispatch(loadUser());
+    dispatch(loadUser());//Set the token in headers and load user using that token
+    dispatch(setAlert("Account created successfully", "success"));
   } catch (err) {
     const errors = err.response.data.errors;//errors array received from backend (name required, valid email..)
     if (errors) {
