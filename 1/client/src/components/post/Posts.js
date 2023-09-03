@@ -4,6 +4,7 @@ import { getPosts } from '../../actions/post';
 import PropTypes from 'prop-types';
 
 import PostItem from './PostItem';
+import PostForm from './PostForm';
 import Spinner from '../../utils/spinner';
 
 const Post = ({ getPosts, post }) => {
@@ -15,14 +16,14 @@ const Post = ({ getPosts, post }) => {
     <div>
       {post.loading ? (<Spinner />) : (
         <Fragment>
-          <h1 class="large text-primary">
+          <h1 className="large text-primary">
             Posts
           </h1>
-          <p class="lead"><i class="fas fa-user"></i> Welcome to the community!</p>
-
+          <p className="lead"><i className="fas fa-user"></i> Welcome to the community!</p>
+          <PostForm />
           {!post.loading && post.posts.length > 0 &&
             post.posts.map((postItem) => (
-              <PostItem postItem={postItem} />
+              <PostItem key={postItem._id} postItem={postItem} />
             ))
           }
         </Fragment>)}

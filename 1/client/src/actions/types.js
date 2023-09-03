@@ -22,8 +22,14 @@ export const ACCOUNT_DELETED = 'ACCOUNT_DELETED';
 
 export const GET_PROFILES = 'GET_PROFILES';
 export const SET_SKILLS = 'SET_SKILLS';
-
+export const GET_PROFILE_BY_ID = 'GET_PROFILE_BY_ID';
+export const REMOVE_PROFILE_BY_ID = 'REMOVE_PROFILE_BY_ID';
 export const GET_GITHUB_REPOS = 'GET_GITHUB_REPOS';
 
 export const GET_POSTS = 'GET_POSTS';
 export const POSTS_ERROR = 'POSTS_ERROR';
+
+export const UPDATE_LIKES = 'UPDATE_LIKES';
+export const DELETE_POST = 'DELETE_POST';
+export const ADD_POST = 'ADD_POST';
+export const GET_POST = 'GET_POST';

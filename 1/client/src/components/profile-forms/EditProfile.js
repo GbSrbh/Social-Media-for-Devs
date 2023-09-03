@@ -38,21 +38,22 @@ const EditProfile = ({ createProfile, profile, getProfile }) => {
 
   useEffect(() => {
     getProfile();
-
-    setFormData({
-      company: profile.loading || !profile.profile ? '' : profile.profile.company ?? '',
-      website: profile.loading || !profile.profile ? '' : profile.profile.website ?? '',
-      location: profile.loading || !profile.profile ? '' : profile.profile.location ?? '',
-      status: profile.loading || !profile.profile ? '' : profile.profile.status ?? '',
-      skills: profile.loading || !profile.profile ? '' : profile.profile.skills ?? '',
-      githubusername: profile.loading || !profile.profile ? '' : profile.profile.githubusername ?? '',
-      bio: profile.loading || !profile.profile ? '' : profile.profile.bio ?? '',
-      twitter: profile.loading || !profile.profile.social ? '' : profile.profile.social.twitter ?? '',
-      facebook: profile.loading || !profile.profile.social ? '' : profile.profile.social.facebook ?? '',
-      youtube: profile.loading || !profile.profile.social ? '' : profile.profile.social.youtube ?? '',
-      linkedin: profile.loading || !profile.profile.social ? '' : profile.profile.social.linkedin ?? '',
-      instagram: profile.loading || !profile.profile.social ? '' : profile.profile.social.instagram ?? '',
-    })
+    if (profile.profile) {
+      setFormData({
+        company: profile.loading || !profile.profile ? '' : profile.profile.company ?? '',
+        website: profile.loading || !profile.profile ? '' : profile.profile.website ?? '',
+        location: profile.loading || !profile.profile ? '' : profile.profile.location ?? '',
+        status: profile.loading || !profile.profile ? '' : profile.profile.status ?? '',
+        skills: profile.loading || !profile.profile ? '' : profile.profile.skills ?? '',
+        githubusername: profile.loading || !profile.profile ? '' : profile.profile.githubusername ?? '',
+        bio: profile.loading || !profile.profile ? '' : profile.profile.bio ?? '',
+        twitter: profile.loading || !profile.profile.social ? '' : profile.profile.social.twitter ?? '',
+        facebook: profile.loading || !profile.profile.social ? '' : profile.profile.social.facebook ?? '',
+        youtube: profile.loading || !profile.profile.social ? '' : profile.profile.social.youtube ?? '',
+        linkedin: profile.loading || !profile.profile.social ? '' : profile.profile.social.linkedin ?? '',
+        instagram: profile.loading || !profile.profile.social ? '' : profile.profile.social.instagram ?? '',
+      })
+    }
   }, [profile.loading])
 
   function onChange(e) {

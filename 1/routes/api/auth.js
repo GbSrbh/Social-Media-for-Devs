@@ -49,6 +49,7 @@ router.post('/',
 
   })
 
+//Get logged in user
 router.get('/', authorisation, async (req, res) => {
   try {
     const user = await User.findById(req.user).select("-password");//Get user id from headers(req.user) 

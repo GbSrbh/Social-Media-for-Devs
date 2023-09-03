@@ -5,12 +5,15 @@ import {
   UPDATE_PROFILE,
   GET_PROFILES,
   SET_SKILLS,
-  GET_GITHUB_REPOS
+  GET_GITHUB_REPOS,
+  GET_PROFILE_BY_ID,
+  REMOVE_PROFILE_BY_ID
 } from '../actions/types';
 
 const initialState = {
   profile: null,
   profiles: [],
+  profileById: null,
   repos: [],
   loading: true,
   errors: {},
@@ -58,6 +61,17 @@ export default function profile(state = initialState, action) {
         ...state,
         repos: payload,
         loading: false,
+      }
+    case GET_PROFILE_BY_ID:
+      return {
+        ...state,
+        profileById: payload,
+        loading: false
+      }
+    case REMOVE_PROFILE_BY_ID:
+      return {
+        ...state,
+        profileById: null
       }
     default:
       return state;

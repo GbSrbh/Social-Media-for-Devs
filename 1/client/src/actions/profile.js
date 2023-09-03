@@ -8,6 +8,8 @@ import {
   GET_PROFILES,
   SET_SKILLS,
   GET_GITHUB_REPOS,
+  GET_PROFILE_BY_ID,
+  REMOVE_PROFILE_BY_ID
 } from './types';
 
 import axios from "axios";
@@ -191,7 +193,7 @@ export const deleteAccount = () => async dispatch => {
 
 //Get all profiles
 export const getProfiles = () => async (dispatch) => {
-  dispatch({ type: CLEAR_PROFILE });
+  dispatch({ type: REMOVE_PROFILE_BY_ID });
   try {
     const res = await axios.get('/api/profile');
 
@@ -238,7 +240,7 @@ export const getProfileById = id => async dispatch => {
   try {
     const res = await axios.get(`/api/profile/user/${id}`);
     dispatch({
-      type: UPDATE_PROFILE,
+      type: GET_PROFILE_BY_ID,
       payload: res.data
     })
   } catch (err) {

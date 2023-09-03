@@ -72,9 +72,11 @@ router.delete('/:id', [authorisation], async (req, res) => {
   try {
     const post = await Post.findById(req.params.id);
     if (!post) {
+      console.log('Post not found');
       return res.status(400).json({ msg: "Post Not Found!!" })
     }
     if (post.user.toString() !== req.user) {//If owner of the post is not the user with token.
+      console.log('Access Denied');
       return res.status(401).json({ msg: "You don't have access to delete the post!!" });
     }
     await post.remove();
@@ -119,15 +121,16 @@ router.put('/unlike/:id', authorisation, async (req, res) => {
     const userId = req.user;
 
     const previousLike = post.likes.filter((item) => item.user.toString() === userId);
-    if (previousLike.length < 1) {//If user never liked the post and want to unlike it
+    if (previousLike.length === 0) {//If user never liked the post and want to unlike it
       return res.status(400).json({ msg: "Post not liked yet!!" });
     }
-
-    const removeIndex = post.likes.map((item) => item.user).indexOf(userId);
-    post.likes.splice(removeIndex, 1);
+    // remove the like
+    post.likes = post.likes.filter(
+      ({ user }) => user.toString() !== req.user
+    );
     await post.save();
-
     res.json(post.likes);
+
 
   } catch (err) {
     console.error(err.message);
@@ -184,18 +187,18 @@ router.delete('/unComment/:post_id/:comment_id', authorisation, async (req, res)
       return res.status(400).json({ msg: "Post Not Found !!" });
     }
 
-    const comment = post.comments.find(item=>item.id===req.params.comment_id);
-    
+    const comment = post.comments.find(item => item.id === req.params.comment_id);
+
     //Check if comment exists
-    if(!comment) {
+    if (!comment) {
       return res.status(400).json({ msg: "Comment Not Found !!" });
     }
     //If the owner of comment is same as the user with token
-    if(comment.user.toString()!==req.user) {
-      return res.status(401).json({msg: "You do not have access to delete the comment"});
+    if (comment.user.toString() !== req.user) {
+      return res.status(401).json({ msg: "You do not have access to delete the comment" });
     }
 
-    const removeIndex = post.comments.map(item=>item._id.toString()).indexOf(req.params.comment_id);
+    const removeIndex = post.comments.map(item => item._id.toString()).indexOf(req.params.comment_id);
     post.comments.splice(removeIndex, 1);
     await post.save();
     res.json(post.comments);

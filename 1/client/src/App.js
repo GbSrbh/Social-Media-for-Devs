@@ -12,7 +12,7 @@ import AddExperience from './components/profile-forms/AddExperience';
 import Profiles from './components/profiles/Profiles';
 import Profile from './components/Profile/Profile';
 import Posts from './components/post/Posts';
-
+import Post from './components/PostSingle/Post';
 //Redux
 import store from './store';
 import Alert from './components/layout/Alert';
@@ -43,6 +43,7 @@ function App() {
         <Route exact path='/profiles' element={<Profiles />} />
         <Route exact path='/profile/:id' element={<Profile />} />
         <Route exact path='/posts' element={<PrivateRoute> <Posts /> </PrivateRoute>} />
+        <Route exact path='/posts/:id' element={<PrivateRoute> <Post /> </PrivateRoute>} />
       </Routes>
     </section>
   );
