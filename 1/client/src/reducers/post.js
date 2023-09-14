@@ -5,6 +5,7 @@ import {
   UPDATE_LIKES,
   ADD_POST,
   GET_POST,
+  UPDATE_COMMENT,
 } from '../actions/types';
 
 const initialState = {
@@ -53,6 +54,11 @@ export default function (state = initialState, action) {
         post: payload,
         loading: false
       };
+    case UPDATE_COMMENT:
+      return {
+        ...state,
+        post: { ...state.post, comments: payload }
+      }
     default:
       return state;
   }

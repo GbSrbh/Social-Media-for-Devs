@@ -4,30 +4,33 @@ import { Link, useParams } from 'react-router-dom';
 import { connect } from 'react-redux';
 import Spinner from '../../utils/spinner';
 import PostItem from '../post/PostItem';
-// import CommentForm from '../post/CommentForm';
-// import CommentItem from '../post/CommentItem';
+import CommentForm from './CommentForm';
+import CommentItem from './CommentItem';
 import { getPost } from '../../actions/post';
 
-const Post = ({ getPost, post: { post, loading } }) => {
+const Post = ({ getPost, post }) => {
   const { id } = useParams();
   useEffect(() => {
     getPost(id);
   }, [getPost, id]);
 
-  return loading || post === null ? (
+  return post.loading || post.post === null ? (
     <Spinner />
   ) : (
     <Fragment>
       <Link to="/posts" className="btn">
         Back To Posts
       </Link>
-      <PostItem postItem={post} showActions={false} />
-      {/* <CommentForm postId={post._id} />
+      <PostItem postItem={post.post} showActions={false} />
+      <CommentForm />
+
+      {/* <CommentForm postId={post._id} /> */}
+
       <div className="comments">
-        {post.comments.map((comment) => (
-          <CommentItem key={comment._id} comment={comment} postId={post._id} />
+        {post.post.comments.length >0 && post.post.comments.map((comment) => (
+          <CommentItem key={comment._id} comment={comment} postId={post.post._id} />
         ))}
-      </div> */}
+      </div>
     </Fragment>
   );
 };

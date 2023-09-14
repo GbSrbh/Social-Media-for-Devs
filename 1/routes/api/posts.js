@@ -155,6 +155,7 @@ router.post('/comment/:post_id', [authorisation,
     const post = await Post.findById(req.params.post_id);
     const user = await User.findById(req.user);
     if (!post) {
+      console.log("Postnotfound")
       return res.status(400).json({ msg: "Post Not Found !!" });
     }
     const newComment = {

@@ -29,7 +29,8 @@ export const GET_GITHUB_REPOS = 'GET_GITHUB_REPOS';
 export const GET_POSTS = 'GET_POSTS';
 export const POSTS_ERROR = 'POSTS_ERROR';
 
-export const UPDATE_LIKES = 'UPDATE_LIKES';
+export const UPDATE_LIKES = 'UPDATE_LIKES';//THis will do both add and remove a like
 export const DELETE_POST = 'DELETE_POST';
 export const ADD_POST = 'ADD_POST';
 export const GET_POST = 'GET_POST';
+export const UPDATE_COMMENT = 'UPDATE_COMMENT';
