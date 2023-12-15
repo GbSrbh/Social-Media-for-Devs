@@ -45,7 +45,7 @@ const Navbar = (props) => {//props: logout function and auth state
   return (
     <nav className="navbar bg-dark">
       <h1>
-        <Link to={"/"}> <i className="fas fa-code" /> DevConnector </Link>
+        <Link to={"/"}> <i className="fas fa-code" /> ForDevelopers </Link>
       </h1>
 
       {(props.auth.isAuthenticated ? authLinks : guestLinks)}
