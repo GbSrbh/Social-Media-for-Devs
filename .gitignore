@@ -1,5 +1,5 @@
-/1/config/default
+/config/default
 **/default.json
-1/middleware/authorisation.js
+middleware/authorisation.js
 
-1/node_modules
+node_modules
